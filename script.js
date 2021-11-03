@@ -7,3 +7,13 @@ if(notes) {
 }
 
 addBtn.addEventListener('click', () => addNewNote())
+
+function updateLS() {
+  const notesText = document.querySelectorAll('textarea')
+
+  const notes = []
+
+  notesText.forEach(note => notes.push(note.value))
+
+  localStorage.setItem('notes', JSON.stringify(notes))
+}
