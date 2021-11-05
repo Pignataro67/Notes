@@ -8,6 +8,21 @@ if(notes) {
 
 addBtn.addEventListener('click', () => addNewNote())
 
+function addNewNote(text = '') {
+    const note = document.createElement('div')
+    note.classList.add('note')
+
+    textArea.addEventListener('input', (e) => {
+        const { value } = e.target
+
+        main.innerHTML = marked(value)
+
+        updateLS()
+    })
+
+    document.body.appendChild(note)
+}
+
 function updateLS() {
   const notesText = document.querySelectorAll('textarea')
 
@@ -17,3 +32,4 @@ function updateLS() {
 
   localStorage.setItem('notes', JSON.stringify(notes))
 }
+
