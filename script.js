@@ -12,6 +12,25 @@ function addNewNote(text = '') {
     const note = document.createElement('div')
     note.classList.add('note')
 
+    const editBtn = note.querySelector('.edit')
+    const deleteBtn = note.querySelector('.delete')
+    const main = note.querySelector('.main')
+    const textArea = note.querySelector('textarea')
+
+    textArea.value = text
+    main.innerHTML = marked(text)
+
+    deleteBtn.addEventListener('click', () => {
+        note.remove()
+
+        updateLS()
+    })
+
+    editBtn.addEventListener('click', () => {
+        main.classList.toggle('hidden')
+        textArea.classList.toggle('hidden')
+    })
+
     textArea.addEventListener('input', (e) => {
         const { value } = e.target
 
