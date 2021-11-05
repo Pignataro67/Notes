@@ -9,37 +9,47 @@ if(notes) {
 addBtn.addEventListener('click', () => addNewNote())
 
 function addNewNote(text = '') {
-    const note = document.createElement('div')
-    note.classList.add('note')
+  const note = document.createElement('div')
+  note.classList.add('note')
 
-    const editBtn = note.querySelector('.edit')
-    const deleteBtn = note.querySelector('.delete')
-    const main = note.querySelector('.main')
-    const textArea = note.querySelector('textarea')
+  note.innerHTML = `
+  <div class="tools">
+    <button class="edit"><i class="fas fa-edit"></i></button>
+    <button class="delete"><i class="fas fa-trash-alt"></i></button>
+  </div>
 
-    textArea.value = text
-    main.innerHTML = marked(text)
+  <div class="main ${text ? "" : "hidden"}"></div>
+  <textarea class="${text ? "hidden" : ""}"></textarea>
+  `
+  
+  const editBtn = note.querySelector('.edit')
+  const deleteBtn = note.querySelector('.delete')
+  const main = note.querySelector('.main')
+  const textArea = note.querySelector('textarea')
 
-    deleteBtn.addEventListener('click', () => {
-        note.remove()
+  textArea.value = text
+  main.innerHTML = marked(text)
 
-        updateLS()
-    })
+  deleteBtn.addEventListener('click', () => {
+    note.remove()
 
-    editBtn.addEventListener('click', () => {
-        main.classList.toggle('hidden')
-        textArea.classList.toggle('hidden')
-    })
+    updateLS()
+  })
 
-    textArea.addEventListener('input', (e) => {
-        const { value } = e.target
+  editBtn.addEventListener('click', () => {
+    main.classList.toggle('hidden')
+    textArea.classList.toggle('hidden')
+  })
 
-        main.innerHTML = marked(value)
+  textArea.addEventListener('input', (e) => {
+    const { value } = e.target
 
-        updateLS()
-    })
+    main.innerHTML = marked(value)
 
-    document.body.appendChild(note)
+    updateLS()
+  })
+
+  document.body.appendChild(note)
 }
 
 function updateLS() {
